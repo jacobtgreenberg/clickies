@@ -17,6 +17,7 @@ app.use(
         saveUninitialized: false
     })
 )
+const bcrypt = require('bcrypt')
 
 //DATABASE
 mongoose.connect('mongodb://localhost:27017/clickies' , {useNewUrlParser : true})
@@ -37,14 +38,17 @@ app.get('/' , (req, res) => {
             complete : all
         })
     })
+    console.log("current user is " + req.session.currentUser)
 })
 
 //create
 app.post('/', (req, res) => {
+    req.body.user = req.session.currentUser
     req.body.tags = req.body.tags.split(",")
     req.body.tags = req.body.tags.map(s => s.trim())
     Clicky.create(req.body, (err, newClick) =>{
         res.redirect('/')
+        console.log(newClick)
     })   
 })
 

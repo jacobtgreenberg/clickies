@@ -5,7 +5,7 @@ const User = require('../models/usersmodel.js')
 
 
 users.get('/', (req, res) => {
-    res.render('users.ejs')
+    res.render('users.ejs', { currentUser: req.session.currentUser})
 })
 
 users.post('/newuser', (req, res) => {
@@ -25,7 +25,7 @@ users.post('/newsession', (req, res) => {
         res.send('user not found')
     } else {
         if (bcrypt.compareSync(req.body.password, foundUser.password)) {
-            req.session.currentUser = foundUser
+            req.session.currentUser = foundUser.username
             res.redirect('/')
         } else {
             res.send('passwords do not match')
