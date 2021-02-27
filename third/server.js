@@ -32,8 +32,18 @@ app.use('/users', userController)
 //ROUTES
 
 //index
-app.get('/' , (req, res) => {
+app.get('/index' , (req, res) => {
     Clicky.find({}, (error, all) => {
+        res.render('home.ejs' , {
+            complete : all
+        })
+    })
+    console.log("current user is " + req.session.currentUser)
+})
+
+//home
+app.get('/' , (req, res) => {
+    Clicky.find({user: req.session.currentUser}, (error, all) => {
         res.render('home.ejs' , {
             complete : all
         })
