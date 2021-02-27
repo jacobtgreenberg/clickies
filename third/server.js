@@ -8,12 +8,17 @@ const app = express();
 app.use(express.urlencoded({extended : true}));
 app.use(express.static('public'));
 app.use(methodOverride('_method'));
+require('dotenv').config()
 
 //DATABASE
 mongoose.connect('mongodb://localhost:27017/clickies' , {useNewUrlParser : true})
 
 //MODELS
 const Clicky = require('./models/clickmodel.js');
+
+//CONTROLLERS
+const userController = require('./controllers/userscont.js')
+app.use('/users', userController)
 
 //ROUTES
 
