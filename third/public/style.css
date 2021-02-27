@@ -1,0 +1,26 @@
+.clicky {
+    height: 250px;
+    width: 250px;
+    border: 1px solid black;
+    margin: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+
+textarea{
+    resize:none;
+}
+
+.body {
+    height: 100px;
+    text-align: left;
+}
