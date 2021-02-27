@@ -2,6 +2,7 @@
 const express = require('express');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
+const session = require('express-session')
 
 //CONFIGURATION
 const app = express();
@@ -9,6 +10,13 @@ app.use(express.urlencoded({extended : true}));
 app.use(express.static('public'));
 app.use(methodOverride('_method'));
 require('dotenv').config()
+app.use(
+    session({
+        secret: process.env.SECRET,
+        resave: false,
+        saveUninitialized: false
+    })
+)
 
 //DATABASE
 mongoose.connect('mongodb://localhost:27017/clickies' , {useNewUrlParser : true})
