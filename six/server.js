@@ -66,7 +66,7 @@ app.get('/' , (req, res) => {
 app.get('/inbox' , (req, res) => {
     Clicky.find({user: req.session.currentUser, inbox: true}, (error, all) => {
         res.render('home.ejs' , {
-            complete : all
+            complete : all,
         })
     })
     console.log("current user is " + req.session.currentUser)
@@ -106,7 +106,11 @@ app.post('/cancel', (req, res) => {
 //delete
 app.delete('/:id' , (req, res) => {
     Clicky.findByIdAndRemove(req.params.id, { useFindAndModify: false}, (err ,data) => {
-        res.redirect('/')
+        if(data.inbox === true){
+            res.redirect('/inbox')
+        }else{
+            res.redirect('/')
+        }
     })
 })
 

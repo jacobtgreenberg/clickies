@@ -1,4 +1,3 @@
-
 $(()=>{
 
     const $button = $('<div>').html('<button type="button">send</button>')
@@ -16,9 +15,6 @@ $(()=>{
                 </form>
                 `
     
-    $('button').on('click', ()=> {
-        console.log('click')
-    })
     
     $('#trigger').one('click',(e)=> {
     $(e.target).html(form)
@@ -28,28 +24,15 @@ $(()=>{
     
 
     $('.clicked').one('click', (e) => {
-        const formd = `<form action="/${$(e.target).attr('id')}?_method=PUT" method="POST">
-                        <textarea class="body" name="text">${$(`#${$(e.target).attr('id')}text`).text().trim()}</textarea>
+        const formd = `<form action="/${$(e.currentTarget).attr('id')}?_method=PUT" method="POST">
+                        <textarea class="body" name="text">${$(`#${$(e.currentTarget).attr('id')}text`).text().trim()}</textarea>
                         <br>
-                        <textarea name="tags" placeholder="tags">${$(`#${$(e.target).attr('id')}tags`).text().trim()}</textarea><br>
+                        <textarea name="tags" placeholder="tags">${$(`#${$(e.currentTarget).attr('id')}tags`).text().trim()}</textarea><br>
                         <input type="submit" value="submit">
-                        <input type="submit" value="delete" formaction="/${$(e.target).attr('id')}?_method=DELETE">
+                        <input type="submit" value="send" formaction="/send/upsend/${$(e.currentTarget).attr('id')}">
+                        <input type="submit" value="delete" formaction="/${$(e.currentTarget).attr('id')}?_method=DELETE">
                         </form>`
         $(e.currentTarget).html(formd)
     })
 
 })
-
-
-
-// <% for(let j = 0;j < complete[i].tags.length ; j++){%>
-//     <%if(j < complete[i].tags.length -1){%>
-//    <%= complete[i].tags[j] + ", " %> 
-//    <%}else{%>
-//     <%= complete[i].tags[j]%>
-//     <%}%>
-//    <% } %>
-
-//<p id="<%=complete[i].id%>tags"><%= complete[i].tags %></p>
-
-//   <p><%for(let j = 0;j < complete[i].tags.length ; j++){%><%if(j < complete[i].tags.length -1){%><%= complete[i].tags[j] + ", " %><%}else{%><%= complete[i].tags[j]%><%}%><%}%></p>
