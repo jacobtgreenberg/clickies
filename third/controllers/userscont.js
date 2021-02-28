@@ -12,7 +12,7 @@ users.post('/newuser', (req, res) => {
     req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10))
     User.create(req.body, (err, createdUser) => {
         console.log(createdUser)
-        res.redirect('/')
+        res.redirect('/users')
     })
 })
 
@@ -31,6 +31,13 @@ users.post('/newsession', (req, res) => {
             res.send('passwords do not match')
         }
     }
+    })
+})
+
+users.delete('/' , (req, res) => {
+    req.session.destroy (() => {
+        res.redirect('/')
+        console.log(req.session)
     })
 })
 

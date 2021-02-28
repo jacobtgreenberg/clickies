@@ -25,11 +25,9 @@ $(()=>{
                         <textarea class="body" name="text">${$(`#${$(e.target).attr('id')}text`).text().trim()}</textarea>
                         <br>
                         <textarea name="tags" placeholder="tags">${$(`#${$(e.target).attr('id')}tags`).text().trim()}</textarea><br>
-                        <input type="submit" value="submit"></br>
-                        </form></br>
-                        <form action="/${$(e.target).attr('id')}?_method=DELETE" method="POST">
-                        <input type="submit" value="delete">
-                        </form> `
+                        <input type="submit" value="submit">
+                        <input type="submit" value="delete" formaction="/${$(e.target).attr('id')}?_method=DELETE">
+                        </form>`
         $(e.currentTarget).html(formd)
     })
 

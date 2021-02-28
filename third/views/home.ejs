@@ -10,9 +10,11 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
     <h1>Clickies</h1>
     <a href="/users">SIGN IN</a>
+    <form action="/users?_method=DELETE" method="POST">
+    <input type="submit" value="LOG OUT">
+    </form>
     <form action='/delete' method="POST">
     <input type="submit" value="clear all">
     </form>
