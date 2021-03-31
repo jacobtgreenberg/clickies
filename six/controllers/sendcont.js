@@ -5,7 +5,7 @@ const User = require('../models/usersmodel.js')
 
 
 send.post('/',(req, res) => {
-    Clicky.find({user: req.session.currentUser}, (error, all) => {
+    Clicky.find({user: req.session.currentUser, inbox: false}, (error, all) => {
         res.render('send.ejs' , {
             content : req.body,
             complete : all
