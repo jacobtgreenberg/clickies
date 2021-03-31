@@ -123,6 +123,16 @@ app.post('/cancelinbox', (req, res) => {
     res.redirect('/inbox')
 })
 
+
+//deleteAllHome
+app.delete('/delete', (req, res) => {
+    Clicky.deleteMany({inbox : false },(err, data) => {
+        res.redirect('/home')
+    } )
+})
+
+
+
 //delete
 app.delete('/:id' , (req, res) => {
     Clicky.findByIdAndRemove(req.params.id, { useFindAndModify: false}, (err ,data) => {
@@ -133,6 +143,7 @@ app.delete('/:id' , (req, res) => {
         }
     })
 })
+
 
 
 
