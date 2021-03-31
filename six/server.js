@@ -68,6 +68,15 @@ app.get('/home' , (req, res) => {
     console.log("current user is " + req.session.currentUser)
 })
 
+//search
+app.post('/search' , (req, res) => {
+    Clicky.find({tags: req.body.search, user: req.session.currentUser, inbox: false } ,(err, all) => {
+        res.render('home.ejs' , {
+            complete : all
+        })
+    })
+})
+
 //inbox
 app.get('/inbox' , (req, res) => {
     Clicky.find({user: req.session.currentUser, inbox: true}, (error, all) => {
