@@ -38,6 +38,7 @@ $(()=>{
     })
 
     $('.inboxclick').one('click', (e) => {
+        $(e.target).addClass('form-format')
         const formd = `<form action="/upload/${$(e.currentTarget).attr('id')}?_method=PUT" method="POST">
                         <textarea class="body" name="text" readonly>${$(`#${$(e.currentTarget).attr('id')}text`).text().trim()}</textarea>
                         <br>
