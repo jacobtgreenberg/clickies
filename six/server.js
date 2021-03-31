@@ -30,10 +30,16 @@ const userController = require('./controllers/userscont.js')
 app.use('/users', userController)
 const sendController = require('./controllers/sendcont.js')
 app.use('/send', sendController)
+const uploadController = require('./controllers/uploadcont.js')
+app.use('/upload', uploadController)
 
 //ROUTES
 
-//index
+app.get('/', (req, res) => {
+    res.redirect('/users')
+})
+
+//index for reference of all
 app.get('/index' , (req, res) => {
     Clicky.find({}, (error, all) => {
         res.render('home.ejs' , {
@@ -52,8 +58,8 @@ app.get('/public' , (req, res) => {
     })
 })
 
-//home
-app.get('/' , (req, res) => {
+//user home
+app.get('/home' , (req, res) => {
     Clicky.find({user: req.session.currentUser, inbox: false}, (error, all) => {
         res.render('home.ejs' , {
             complete : all
@@ -65,7 +71,7 @@ app.get('/' , (req, res) => {
 //inbox
 app.get('/inbox' , (req, res) => {
     Clicky.find({user: req.session.currentUser, inbox: true}, (error, all) => {
-        res.render('home.ejs' , {
+        res.render('inbox.ejs' , {
             complete : all,
         })
     })
@@ -78,7 +84,7 @@ app.post('/', (req, res) => {
     req.body.tags = req.body.tags.split(",")
     req.body.tags = req.body.tags.map(s => s.trim())
     Clicky.create(req.body, (err, newClick) =>{
-        res.redirect('/')
+        res.redirect('/home')
     })   
 })
 
@@ -89,18 +95,32 @@ app.post('/search' , (req, res) => {
     })
 })
 
+
+
+// //upload from inbox
+// app.put('upload/:id' , (req, res) => {
+//     console.log(req.params.id)
+//     Clicky.findByIdAndUpdate(req.params.id, {inbox : false}, (err, updated) => {
+//         res.redirect('/home')
+//     })
+// })
 //update
 app.put('/:id' , (req, res) => {
     req.body.tags = req.body.tags.split(",")
     req.body.tags = req.body.tags.map(s => s.trim())
     Clicky.findByIdAndUpdate(req.params.id, req.body, (err, updated) => {
-        res.redirect('/')
+        res.redirect('/home')
     })
 })
 
 //cancel
 app.post('/cancel', (req, res) => {
-    res.redirect('/')
+    res.redirect('/home')
+})
+
+//inboxcancel
+app.post('/cancelinbox', (req, res) => {
+    res.redirect('/inbox')
 })
 
 //delete
@@ -109,7 +129,7 @@ app.delete('/:id' , (req, res) => {
         if(data.inbox === true){
             res.redirect('/inbox')
         }else{
-            res.redirect('/')
+            res.redirect('/home')
         }
     })
 })

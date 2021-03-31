@@ -8,6 +8,10 @@ users.get('/', (req, res) => {
     res.render('users.ejs', { currentUser: req.session.currentUser})
 })
 
+users.get('/signup', (req, res) => {
+    res.render('sign_up.ejs')
+})
+
 users.post('/newuser', (req, res) => {
     req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10))
     User.create(req.body, (err, createdUser) => {
@@ -26,7 +30,7 @@ users.post('/newsession', (req, res) => {
     } else {
         if (bcrypt.compareSync(req.body.password, foundUser.password)) {
             req.session.currentUser = foundUser.username
-            res.redirect('/')
+            res.redirect('/home')
         } else {
             res.send('passwords do not match')
         }

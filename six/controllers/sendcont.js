@@ -40,7 +40,7 @@ send.post('/commit',(req, res) => {
             Clicky.create(req.body, (err, newClick) =>{
                 req.body.user = req.session.currentUser
                 Clicky.create(req.body, (err, anotherClick)=> {
-                    res.redirect('/')
+                    res.redirect('/home')
                 })
             })   
         }else{
@@ -62,7 +62,7 @@ send.post('/commit',(req, res) => {
                     req.body.tags.splice(req.body.tags.length - 1, 1 , `to:${req.body.to}`)
                 }
                 Clicky.create(req.body, (err, anotherClick) =>{
-                    res.redirect('/')
+                    res.redirect('/home')
                 })
              })  
             }
@@ -86,7 +86,7 @@ send.post('/upcommit/:id',(req, res) => {
             Clicky.create(req.body, (err, newClick) =>{
                 req.body.user = req.session.currentUser
                 Clicky.findByIdAndUpdate(req.params.id, {tags: req.body.tags} , (err, anotherClick)=> {
-                    res.redirect('/')
+                    res.redirect('/home')
                 })
             })   
         }else{
@@ -108,7 +108,7 @@ send.post('/upcommit/:id',(req, res) => {
                     req.body.tags.splice(req.body.tags.length - 1, 1 , `to:${req.body.to}`)
                 }
                 Clicky.findByIdAndUpdate(req.params.id, {tags: req.body.tags} , (err, anotherClick) =>{
-                    res.redirect('/')
+                    res.redirect('/home')
                 })
              })  
             }

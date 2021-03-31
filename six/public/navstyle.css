@@ -1,0 +1,12 @@
+li {
+    display: inline-block  
+}
+
+ul {
+    list-style: none;
+    display:inline-block;
+}
+
+h1 {
+    display: inline-block;
+}
