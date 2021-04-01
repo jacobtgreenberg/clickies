@@ -52,7 +52,7 @@ app.get('/index' , (req, res) => {
 //public
 app.get('/public' , (req, res) => {
     Clicky.find({user: 'PUBLIC'}, (err, public) => {
-        res.render('home.ejs' ,  {
+        res.render('public.ejs' ,  {
             complete : public
         })
     })

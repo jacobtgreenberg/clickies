@@ -14,8 +14,8 @@
     <div class="nav">
     <a href="/home"><h1>clickies</h1></a>
     <ul>
-        <li><a style="text-decoration: underline;" href="/inbox">inbox</a></li>
-        <li><a href="/public">public</a></li>
+        <li><a href="/inbox">inbox</a></li>
+        <li><a style="text-decoration: underline;" href="/public">public</a></li>
       
         <li>
         <form action="/inboxsearch" method="POST">
@@ -37,7 +37,7 @@
     </div>
     <div class = "container">
     <% for(let i= complete.length - 1; i >= 0; i--){ %>
-        <div id="<%=complete[i].id%>" class = 'clicky inboxclick'>
+        <div id="<%=complete[i].id%>" class = 'clicky'>
            <p id="<%=complete[i].id%>text" class="body-display"><%= complete[i].text %></p>
            <p id="<%=complete[i].id%>tags" class="tags-display"><%for(let j = 0;j < complete[i].tags.length ; j++){%><%if(j < complete[i].tags.length -1){%><%= complete[i].tags[j] + ", " %><%}else{%><%= complete[i].tags[j]%><%}%><%}%></p>
         </div>
