@@ -14,7 +14,7 @@ send.post('/',(req, res) => {
 })
 
 send.post('/upsend/:id',(req, res) => {
-    Clicky.find({user: req.session.currentUser}, (error, all) => {
+    Clicky.find({user: req.session.currentUser, inbox: false}, (error, all) => {
         res.render('upsend.ejs' , {
             content : req.body,
             complete : all,
@@ -76,15 +76,16 @@ send.post('/upcommit/:id',(req, res) => {
             res.send('no such person')
         }else if(req.body.to === 'public'){
             req.body.user = req.body.to
-            if(req.body.tags.length === 0){
-                req.body.tags = 'public'
-            }else{
-            req.body.tags += ',public'
-            req.body.tags = req.body.tags.split(",")
-            req.body.tags = req.body.tags.map(s => s.trim())
-            }
+            
             Clicky.create(req.body, (err, newClick) =>{
                 req.body.user = req.session.currentUser
+                if(req.body.tags.length === 0){
+                    req.body.tags = 'public'
+                }else{
+                req.body.tags += ',public'
+                req.body.tags = req.body.tags.split(",")
+                req.body.tags = req.body.tags.map(s => s.trim())
+                }
                 Clicky.findByIdAndUpdate(req.params.id, {tags: req.body.tags} , (err, anotherClick)=> {
                     res.redirect('/home')
                 })

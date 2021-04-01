@@ -7,6 +7,18 @@
     position: relative;
 }
 
+.box {
+    background-color: white;
+    height:250px;
+    width:250px;
+    border: 1px solid black;
+    margin: 200px auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .body-display {
     margin-top: 60px;
     width: 85%;
@@ -53,19 +65,8 @@ textarea{
 	height: 100%;
 	width: 100%;
 	z-index: 1;
-    display:flex;
+    /* display:flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: center; */
 }
 
-.box {
-    background-color: white;
-    height:250px;
-    width:250px;
-    border: 1px solid black;
-    margin: auto;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
