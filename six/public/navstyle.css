@@ -1,5 +1,7 @@
 li {
-    display: inline-block  
+    display: inline-block;
+    margin-left: 1em;
+    padding-top: 1em;
 }
 
 ul {
@@ -9,4 +11,10 @@ ul {
 
 h1 {
     display: inline-block;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 8px;
 }
