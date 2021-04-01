@@ -30,15 +30,15 @@ send.post('/commit',(req, res) => {
             res.send('no such person')
         }else if(req.body.to === 'public'){
             req.body.user = req.body.to
-            if(req.body.tags.length === 0){
-                req.body.tags = 'public'
-            }else{
-                req.body.tags += ',public'
-                req.body.tags = req.body.tags.split(",")
-                req.body.tags = req.body.tags.map(s => s.trim())
-            }
             Clicky.create(req.body, (err, newClick) =>{
                 req.body.user = req.session.currentUser
+                if(req.body.tags.length === 0){
+                    req.body.tags = 'public'
+                }else{
+                    req.body.tags += ',public'
+                    req.body.tags = req.body.tags.split(",")
+                    req.body.tags = req.body.tags.map(s => s.trim())
+                }
                 Clicky.create(req.body, (err, anotherClick)=> {
                     res.redirect('/home')
                 })
