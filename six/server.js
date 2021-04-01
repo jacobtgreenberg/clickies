@@ -86,6 +86,15 @@ app.post('/inboxsearch' , (req, res) => {
     })
 })
 
+//public search
+app.post('/publicsearch' , (req, res) => {
+    Clicky.find({tags: req.body.search, user: "public"} ,(err, all) => {
+        res.render('public.ejs' , {
+            complete : all
+        })
+    })
+})
+
 //inbox
 app.get('/inbox' , (req, res) => {
     Clicky.find({user: req.session.currentUser, inbox: true}, (error, all) => {
