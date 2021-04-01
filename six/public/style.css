@@ -9,6 +9,11 @@
 
 .body-display {
     margin-top: 60px;
+    width: 85%;
+    text-align: justify;
+    margin: 35px auto;
+    line-height: 1.3em;
+    font-size: 1.2em;
 }
 
 .form-format {
@@ -22,9 +27,11 @@
     position: absolute;
     width: 100%;
     bottom: 5px;
+    font-size: 1.1em;
 }
 
 .container {
+    margin-top: 30px;
     display: flex;
     flex-wrap: wrap;
 }

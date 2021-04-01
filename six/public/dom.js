@@ -5,7 +5,7 @@ $(()=>{
     const form= `<form action="/" method="POST">
                     
                     <textarea class="body"  name="text"></textarea><br>
-                    <textarea name="tags" placeholder="tags"></textarea><br>
+                    <textarea name="tags" placeholder="tags"></textarea><br><br>
                     <input type="submit" value="submit">
                     <input type="submit" value="send" formaction="/send">
                     <input type="submit" value="cancel" formaction="/cancel">
