@@ -51,7 +51,7 @@ app.get('/index' , (req, res) => {
 
 //public
 app.get('/public' , (req, res) => {
-    Clicky.find({user: 'PUBLIC'}, (err, public) => {
+    Clicky.find({user: 'public'}, (err, public) => {
         res.render('public.ejs' ,  {
             complete : public
         })

@@ -28,12 +28,12 @@ send.post('/commit',(req, res) => {
     User.findOne({username: req.body.to}, (error, foundUser)=>{
         if(foundUser.username === undefined){
             res.send('no such person')
-        }else if(req.body.to === 'PUBLIC'){
+        }else if(req.body.to === 'public'){
             req.body.user = req.body.to
             if(req.body.tags.length === 0){
-                req.body.tags = 'PUBLIC'
+                req.body.tags = 'public'
             }else{
-                req.body.tags += ',PUBLIC'
+                req.body.tags += ',public'
                 req.body.tags = req.body.tags.split(",")
                 req.body.tags = req.body.tags.map(s => s.trim())
             }
@@ -74,12 +74,12 @@ send.post('/upcommit/:id',(req, res) => {
         console.log(req.body)
         if(foundUser.username === undefined){
             res.send('no such person')
-        }else if(req.body.to === 'PUBLIC'){
+        }else if(req.body.to === 'public'){
             req.body.user = req.body.to
             if(req.body.tags.length === 0){
-                req.body.tags = 'PUBLIC'
+                req.body.tags = 'public'
             }else{
-            req.body.tags += ',PUBLIC'
+            req.body.tags += ',public'
             req.body.tags = req.body.tags.split(",")
             req.body.tags = req.body.tags.map(s => s.trim())
             }
