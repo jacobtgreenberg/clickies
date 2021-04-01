@@ -77,6 +77,15 @@ app.post('/search' , (req, res) => {
     })
 })
 
+//inbox search
+app.post('/inboxsearch' , (req, res) => {
+    Clicky.find({tags: req.body.search, user: req.session.currentUser, inbox: true } ,(err, all) => {
+        res.render('inbox.ejs' , {
+            complete : all
+        })
+    })
+})
+
 //inbox
 app.get('/inbox' , (req, res) => {
     Clicky.find({user: req.session.currentUser, inbox: true}, (error, all) => {
@@ -97,12 +106,6 @@ app.post('/', (req, res) => {
     })   
 })
 
-//search
-app.post('/search' , (req, res) => {
-    Clicky.find({tags: req.body.search} ,(err, results) => {
-        res.redirect('/')
-    })
-})
 
 
 
