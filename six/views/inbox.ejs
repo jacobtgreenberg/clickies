@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="navstyle.css">
 </head>
 <body>
+    <div class="nav">
     <a href="/home"><h1>Clickies</h1></a>
     <ul>
         <li><form action="/users?_method=DELETE" method="POST">
@@ -28,6 +29,7 @@
         </form>
         </li>
     </ul>
+    </div>
     <div class = "container">
     <% for(let i= complete.length - 1; i >= 0; i--){ %>
         <div id="<%=complete[i].id%>" class = 'clicky inboxclick'>
