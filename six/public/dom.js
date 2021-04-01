@@ -29,7 +29,7 @@ $(()=>{
         const formd = `<form action="/${$(e.currentTarget).attr('id')}?_method=PUT" method="POST">
                         <textarea class="body" name="text">${$(`#${$(e.currentTarget).attr('id')}text`).text().trim()}</textarea>
                         <br>
-                        <textarea name="tags" placeholder="tags">${$(`#${$(e.currentTarget).attr('id')}tags`).text().trim()}</textarea><br>
+                        <textarea name="tags" placeholder="tags">${$(`#${$(e.currentTarget).attr('id')}tags`).text().trim()}</textarea><br><br>
                         <input type="submit" value="submit">
                         <input type="submit" value="send" formaction="/send/upsend/${$(e.currentTarget).attr('id')}">
                         <input type="submit" value="delete" formaction="/${$(e.currentTarget).attr('id')}?_method=DELETE">
@@ -42,7 +42,7 @@ $(()=>{
         const formd = `<form action="/upload/${$(e.currentTarget).attr('id')}?_method=PUT" method="POST">
                         <textarea class="body" name="text" readonly>${$(`#${$(e.currentTarget).attr('id')}text`).text().trim()}</textarea>
                         <br>
-                        <textarea name="tags" placeholder="tags" readonly>${$(`#${$(e.currentTarget).attr('id')}tags`).text().trim()}</textarea><br>
+                        <textarea name="tags" placeholder="tags" readonly>${$(`#${$(e.currentTarget).attr('id')}tags`).text().trim()}</textarea><br><br>
                         <input type="submit" value="upload">
                         <input type="submit" value="reply" formaction="/send/upsend/${$(e.currentTarget).attr('id')}">
                         <input type="submit" value="delete" formaction="/${$(e.currentTarget).attr('id')}?_method=DELETE">
