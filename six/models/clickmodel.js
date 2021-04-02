@@ -4,7 +4,8 @@ const clickySchema = new mongoose.Schema ({
     text: String,
     tags: Array,
     user: String,
-    inbox: {type: Boolean, default: false}
+    inbox: {type: Boolean, default: false},
+    color: String
 })
 
 const Clicky = mongoose.model('clicky', clickySchema)

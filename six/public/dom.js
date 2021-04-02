@@ -9,9 +9,11 @@ $(()=>{
                     <input type="submit" value="submit">
                     <input type="submit" value="send" formaction="/send">
                     <input type="submit" value="cancel" formaction="/cancel">
-                </form>
-                <form>
-                
+                    <select name="color">
+                    <option value=""></option>
+                    <option value="r">r</option>
+                    <option value="y">y</option>
+                </select>
                 </form>
                 `
     
@@ -27,12 +29,17 @@ $(()=>{
     $('.clicked').one('click', (e) => {
         $(e.target).addClass('form-format')
         const formd = `<form action="/${$(e.currentTarget).attr('id')}?_method=PUT" method="POST">
-                        <textarea class="body" name="text">${$(`#${$(e.currentTarget).attr('id')}text`).text().trim()}</textarea>
-                        <br>
-                        <textarea name="tags" placeholder="tags">${$(`#${$(e.currentTarget).attr('id')}tags`).text().trim()}</textarea><br><br>
-                        <input type="submit" value="submit">
-                        <input type="submit" value="send" formaction="/send/upsend/${$(e.currentTarget).attr('id')}">
-                        <input type="submit" value="delete" formaction="/${$(e.currentTarget).attr('id')}?_method=DELETE">
+                            <textarea class="body" name="text">${$(`#${$(e.currentTarget).attr('id')}text`).text().trim()}</textarea>
+                            <br>
+                            <textarea name="tags" placeholder="tags">${$(`#${$(e.currentTarget).attr('id')}tags`).text().trim()}</textarea><br><br>
+                            <input type="submit" value="submit">
+                            <input type="submit" value="send" formaction="/send/upsend/${$(e.currentTarget).attr('id')}">
+                            <input type="submit" value="delete" formaction="/${$(e.currentTarget).attr('id')}?_method=DELETE">
+                            <select name="color">
+                                <option value=""></option>
+                                <option value="r">r</option>
+                                <option value="y">y</option>
+                            </select>
                         </form>`
         $(e.currentTarget).html(formd)
     })
