@@ -30,7 +30,7 @@ send.post('/reply/:id',(req, res) => {
         req.body.tags = "re: " + testArray
         from = from.join().split(":")
         req.body.to = "to:" + from[from.length - 1]
-        console.log(req.body)
+       
         
          
         res.render('reply.ejs' , {
@@ -42,14 +42,34 @@ send.post('/reply/:id',(req, res) => {
 })
 
 send.post('/upreply/:id',(req, res) => {
-    Clicky.find({_id: req.params.id}, (error, foundClicky) => {
-        console.log(foundClicky)
-        console.log(req.body.tags)
-        let testArray = req.body.tags.split(",")
-        console.log(testArray)
-        testArray.splice(testArray.length - 1, 1)
-        console.log(testArray)
-    })
+    req.body.to = req.body.to.replace("to:","")
+    User.findOne({username: req.body.to}, (error, foundUser)=>{
+        if(foundUser.username === undefined){
+            res.send('no such person')
+        }else{
+             req.body.user = req.body.to
+             req.body.inbox = true
+             if(req.body.tags.length === 0){
+                 req.body.tags = `from:${req.session.currentUser}`
+             }else{
+                req.body.tags += `,from:${req.session.currentUser}`
+                req.body.tags = req.body.tags.split(",")
+                req.body.tags = req.body.tags.map(s => s.trim())
+             }
+             Clicky.create(req.body, (err, newClick) =>{
+                req.body.user = req.session.currentUser
+                req.body.inbox = false
+                if(req.body.tags === `from:${req.session.currentUser}`){
+                    req.body.tags = `to:${req.body.to}`
+                }else{
+                    req.body.tags.splice(req.body.tags.length - 1, 1 , `to:${req.body.to}`)
+                }
+                Clicky.create(req.body, (err, anotherClick) =>{
+                    res.redirect('/inbox')
+                })
+             })  
+            }
+        })
 })
 
 send.post('/commit',(req, res) => {
