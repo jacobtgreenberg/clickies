@@ -1,7 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&family=Varela+Round&display=swap');
+
+body {
+    font-family: "Varela Round";
+    min-width: 1000px;
+}
+
 .clicky {
     height: 250px;
     width: 250px;
-    border: 1px solid black;
+    border: 1px solid grey;
     margin: 10px;
     text-align: center;
     position: relative;
@@ -30,9 +37,9 @@
 
 .form-format {
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    /* display: flex; */
+    /* flex-direction: column;
+    justify-content: center; */
 }
 
 .tags-display {
@@ -53,8 +60,30 @@ textarea{
 }
 
 .body {
-    height: 100px;
+    height: 140px;
+    width: 210px;
+    margin-top: 20px;
+    /* margin-bottom: 10px; */
     text-align: left;
+    font-size: 1.1em;
+}
+
+#send-body {
+    margin-top:10px;
+}
+
+#send-to {
+    margin-bottom: 3px;
+}
+
+form {
+    margin: auto;
+}
+
+.textarea-tags {
+    width:210px;
+    height: 15px;
+    margin-bottom: 10px;
 }
 
 .modal {
@@ -89,3 +118,17 @@ textarea{
 .b {
     background-color: #bcc7f7;
 }
+
+input[type="submit"] {
+    background-color: white;
+    border: 1px solid grey;
+    font-family: "Quicksand";
+    font-size: 1em;
+}
+ a, a:visited {
+     color: black;
+ }
+
+ textarea {
+     font-family: "Varela Round";
+ }

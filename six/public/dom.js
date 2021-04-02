@@ -5,8 +5,8 @@ $(()=>{
     const form= `<form action="/" method="POST">
                     
                     <textarea class="body"  name="text"></textarea><br>
-                    <textarea name="tags" placeholder="tags"></textarea><br><br>
-                    <input type="submit" value="submit">
+                    <textarea class="textarea-tags" name="tags" placeholder="tags"></textarea><br>
+                    <input type="submit" value="  click  ">
                     <input type="submit" value="send" formaction="/send">
                     <input type="submit" value="cancel" formaction="/cancel">
                     <select name="color">
@@ -34,8 +34,8 @@ $(()=>{
         const formd = `<form action="/${$(e.currentTarget).attr('id')}?_method=PUT" method="POST">
                             <textarea class="body" name="text">${$(`#${$(e.currentTarget).attr('id')}text`).text().trim()}</textarea>
                             <br>
-                            <textarea name="tags" placeholder="tags">${$(`#${$(e.currentTarget).attr('id')}tags`).text().trim()}</textarea><br><br>
-                            <input type="submit" value="submit">
+                            <textarea class="textarea-tags" name="tags" placeholder="tags">${$(`#${$(e.currentTarget).attr('id')}tags`).text().trim()}</textarea><br>
+                            <input type="submit" value="  click  ">
                             <input type="submit" value="send" formaction="/send/upsend/${$(e.currentTarget).attr('id')}">
                             <input type="submit" value="delete" formaction="/${$(e.currentTarget).attr('id')}?_method=DELETE">
                             <select name="color">
@@ -53,12 +53,11 @@ $(()=>{
     $('.inboxclick').one('click', (e) => {
         console.log($(e.target).attr('class').length)
         let letter = $(e.target).attr('class')[$(e.target).attr('class').length - 1]
-        console.log(letter)
         $(e.target).addClass('form-format')
         const formd = `<form action="/upload/${$(e.currentTarget).attr('id')}?_method=PUT" method="POST">
                         <textarea class="body" name="text" readonly>${$(`#${$(e.currentTarget).attr('id')}text`).text().trim()}</textarea>
                         <br>
-                        <textarea name="tags" placeholder="tags" readonly>${$(`#${$(e.currentTarget).attr('id')}tags`).text().trim()}</textarea><br><br>
+                        <textarea class="textarea-tags" name="tags" placeholder="tags" readonly>${$(`#${$(e.currentTarget).attr('id')}tags`).text().trim()}</textarea><br>
                         <input type="submit" value="upload">
                         <input type="submit" value="reply" formaction="/send/reply/${$(e.currentTarget).attr('id')}">
                         <input type="submit" value="delete" formaction="/${$(e.currentTarget).attr('id')}?_method=DELETE">
