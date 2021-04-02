@@ -13,13 +13,14 @@
 <body>
     <div class="modal">
        
-        <div class="box">
+        <div class="box <%=content.color%>">
             <form action="/send/upreply/<%=id%>" method="POST">
                 <textarea class="body" name="text"><%=content.text%></textarea>
                 <textarea name="tags"><%=content.tags%></textarea>
                 <input type="text" name="to" placeholder="to" value=<%=content.to%> style="width:175px" readonly><br><br>
                 <input type="submit" value="send">
                 <input type="submit" value="cancel" formaction="/cancelinbox">
+                <input type="hidden" name="color" value="<%=content.color%>"/>
                 </form>
         </div>
     </div>

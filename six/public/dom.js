@@ -51,6 +51,9 @@ $(()=>{
     })
 
     $('.inboxclick').one('click', (e) => {
+        console.log($(e.target).attr('class').length)
+        let letter = $(e.target).attr('class')[$(e.target).attr('class').length - 1]
+        console.log(letter)
         $(e.target).addClass('form-format')
         const formd = `<form action="/upload/${$(e.currentTarget).attr('id')}?_method=PUT" method="POST">
                         <textarea class="body" name="text" readonly>${$(`#${$(e.currentTarget).attr('id')}text`).text().trim()}</textarea>
@@ -60,6 +63,7 @@ $(()=>{
                         <input type="submit" value="reply" formaction="/send/reply/${$(e.currentTarget).attr('id')}">
                         <input type="submit" value="delete" formaction="/${$(e.currentTarget).attr('id')}?_method=DELETE">
                         <input type="submit" value="cancel" formaction="/cancelinbox">
+                        <input type="hidden" name="color" value="${letter}"/>
                         </form>`
         $(e.currentTarget).html(formd)
     })
