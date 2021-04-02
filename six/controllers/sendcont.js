@@ -23,6 +23,35 @@ send.post('/upsend/:id',(req, res) => {
     })
 })
 
+send.post('/reply/:id',(req, res) => {
+    Clicky.find({user: req.session.currentUser, inbox: true}, (error, all) => {
+        let testArray = req.body.tags.split(",")
+        let from = testArray.splice(testArray.length - 1, 1)
+        req.body.tags = "re: " + testArray
+        from = from.join().split(":")
+        req.body.to = "to:" + from[from.length - 1]
+        console.log(req.body)
+        
+         
+        res.render('reply.ejs' , {
+            content : req.body,
+            complete : all,
+            id : req.params.id
+        })
+    })
+})
+
+send.post('/upreply/:id',(req, res) => {
+    Clicky.find({_id: req.params.id}, (error, foundClicky) => {
+        console.log(foundClicky)
+        console.log(req.body.tags)
+        let testArray = req.body.tags.split(",")
+        console.log(testArray)
+        testArray.splice(testArray.length - 1, 1)
+        console.log(testArray)
+    })
+})
+
 send.post('/commit',(req, res) => {
     console.log(req.body.tags.length)
     User.findOne({username: req.body.to}, (error, foundUser)=>{
@@ -30,6 +59,8 @@ send.post('/commit',(req, res) => {
             res.send('no such person')
         }else if(req.body.to === 'public'){
             req.body.user = req.body.to
+            req.body.tags = req.body.tags.split(",")
+            req.body.tags = req.body.tags.map(s => s.trim())
             Clicky.create(req.body, (err, newClick) =>{
                 req.body.user = req.session.currentUser
                 if(req.body.tags.length === 0){
@@ -76,7 +107,8 @@ send.post('/upcommit/:id',(req, res) => {
             res.send('no such person')
         }else if(req.body.to === 'public'){
             req.body.user = req.body.to
-            
+            req.body.tags = req.body.tags.split(",")
+            req.body.tags = req.body.tags.map(s => s.trim())
             Clicky.create(req.body, (err, newClick) =>{
                 req.body.user = req.session.currentUser
                 if(req.body.tags.length === 0){

@@ -44,7 +44,7 @@ $(()=>{
                         <br>
                         <textarea name="tags" placeholder="tags" readonly>${$(`#${$(e.currentTarget).attr('id')}tags`).text().trim()}</textarea><br><br>
                         <input type="submit" value="upload">
-                        <input type="submit" value="reply" formaction="/send/upsend/${$(e.currentTarget).attr('id')}">
+                        <input type="submit" value="reply" formaction="/send/reply/${$(e.currentTarget).attr('id')}">
                         <input type="submit" value="delete" formaction="/${$(e.currentTarget).attr('id')}?_method=DELETE">
                         <input type="submit" value="cancel" formaction="/cancelinbox">
                         </form>`
