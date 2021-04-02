@@ -13,6 +13,9 @@ $(()=>{
                     <option value=""></option>
                     <option value="r">r</option>
                     <option value="y">y</option>
+                    <option value="g">g</option>
+                    <option value="p">p</option>
+                    <option value="b">b</option>
                 </select>
                 </form>
                 `
@@ -39,6 +42,9 @@ $(()=>{
                                 <option value=""></option>
                                 <option value="r">r</option>
                                 <option value="y">y</option>
+                                <option value="g">g</option>
+                                <option value="p">p</option>
+                                <option value="b">b</option>
                             </select>
                         </form>`
         $(e.currentTarget).html(formd)
