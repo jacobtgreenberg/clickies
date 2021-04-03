@@ -24,6 +24,7 @@ mongoose.connect('mongodb://localhost:27017/clickies' , {useNewUrlParser : true}
 
 //MODELS
 const Clicky = require('./models/clickmodel.js');
+const User = require('./models/usersmodel.js')
 
 //CONTROLLERS
 const userController = require('./controllers/userscont.js')
@@ -133,14 +134,22 @@ app.post('/searchcreate', (req, res) => {
 
 
 
+//update in search screen
+app.put('/searchupdate' , (req, res) => {
+    req.body.tags = req.body.tags.split(",")
+    req.body.tags = req.body.tags.map(s => s.trim())
+    
+    Clicky.findByIdAndUpdate(req.body.id, req.body, (err, updated) => {
+        Clicky.find({tags: req.body.search, user: req.session.currentUser, inbox: false } ,(err, all) => {
+            res.render('search.ejs' , {
+                complete : all,
+                tag: req.body.search
+            })
+        })
+    })
+})
 
-// //upload from inbox
-// app.put('upload/:id' , (req, res) => {
-//     console.log(req.params.id)
-//     Clicky.findByIdAndUpdate(req.params.id, {inbox : false}, (err, updated) => {
-//         res.redirect('/home')
-//     })
-// })
+
 //update
 app.put('/:id' , (req, res) => {
     req.body.tags = req.body.tags.split(",")
@@ -168,7 +177,12 @@ app.delete('/delete', (req, res) => {
     } )
 })
 
-
+//deleteAllInbox
+app.delete('/deleteallinbox', (req, res) => {
+    Clicky.deleteMany({inbox : true },(err, data) => {
+        res.redirect('/inbox')
+    } )
+})
 
 //delete
 app.delete('/:id' , (req, res) => {
@@ -181,7 +195,68 @@ app.delete('/:id' , (req, res) => {
     })
 })
 
+app.post('/searchysend',(req, res) => {
+    Clicky.find({user: req.session.currentUser, inbox: false, tags: req.body.search}, (error, all) => {
+        res.render('searchsend.ejs' , {
+            content : req.body,
+            complete : all
+        })
+    })
+})
 
+app.post('/searchcommity',(req, res) => {
+    console.log(req.body.tags.length)
+    User.findOne({username: req.body.to}, (error, foundUser)=>{
+        if(foundUser.username === undefined){
+            res.send('no such person')
+        }else if(req.body.to === 'public'){
+            req.body.user = req.body.to
+            req.body.tags = req.body.tags.split(",")
+            req.body.tags = req.body.tags.map(s => s.trim())
+            Clicky.create(req.body, (err, newClick) =>{
+                req.body.user = req.session.currentUser
+                if(req.body.tags.length === 0){
+                    req.body.tags = 'public'
+                }else{
+                    req.body.tags += ',public'
+                    req.body.tags = req.body.tags.split(",")
+                    req.body.tags = req.body.tags.map(s => s.trim())
+                }
+                Clicky.create(req.body, (err, anotherClick)=> {
+                    res.redirect('/home')
+                })
+            })   
+        }else{
+             req.body.user = req.body.to
+             req.body.inbox = true
+             if(req.body.tags.length === 0){
+                 req.body.tags = `from:${req.session.currentUser}`
+             }else{
+                req.body.tags += `,from:${req.session.currentUser}`
+                req.body.tags = req.body.tags.split(",")
+                req.body.tags = req.body.tags.map(s => s.trim())
+             }
+             Clicky.create(req.body, (err, newClick) =>{
+                req.body.user = req.session.currentUser
+                req.body.inbox = false
+                if(req.body.tags === `from:${req.session.currentUser}`){
+                    req.body.tags = `to:${req.body.to}`
+                }else{
+                    req.body.tags.splice(req.body.tags.length - 1, 1 , `to:${req.body.to}`)
+                }
+                Clicky.create(req.body, (err, anotherClick) =>{
+                    Clicky.find({tags: req.body.search, user: req.session.currentUser, inbox: false } ,(err, all) => {
+                        console.log(req.body.search)
+                        res.render('search.ejs' , {
+                            complete : all,
+                            tag: req.body.search
+                        })
+                    })
+                })
+             })  
+            }
+        })
+})
 
 
 

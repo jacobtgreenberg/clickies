@@ -39,7 +39,7 @@ $(()=>{
                 <textarea class="body"  name="text"></textarea><br>
                 <textarea class="textarea-tags" name="tags" placeholder="tags"></textarea><br>
                 <input type="submit" value="  click  ">
-                <input type="submit" value="send" formaction="/send/search">
+                <input type="submit" value="send" formaction="/searchysend">
                 <input type="submit" value="cancel" formaction="/search">
                 <select name="color">
                     <option value=""></option>
@@ -55,7 +55,31 @@ $(()=>{
         $(e.target).html(searchForm)
         })
     
-
+        $('.searchclicked').one('click', (e) => {
+            let split = $(e.target).attr('class').split('-')
+            let tag = split[0]
+            console.log($(e.currentTarget).attr('id'))
+            $(e.target).addClass('form-format')
+            const formd = `<form action="searchupdate?_method=PUT" method="POST">
+                                <textarea class="body" name="text">${$(`#${$(e.currentTarget).attr('id')}text`).text().trim()}</textarea>
+                                <br>
+                                <textarea class="textarea-tags" name="tags" placeholder="tags">${$(`#${$(e.currentTarget).attr('id')}tags`).text().trim()}</textarea><br>
+                                <input type="submit" value="  click  ">
+                                <input type="submit" value="send" formaction="/send/upsend/${$(e.currentTarget).attr('id')}">
+                                <input type="submit" value="delete" formaction="/${$(e.currentTarget).attr('id')}?_method=DELETE">
+                                <select name="color">
+                                    <option value=""></option>
+                                    <option value="r">r</option>
+                                    <option value="y">y</option>
+                                    <option value="g">g</option>
+                                    <option value="p">p</option>
+                                    <option value="b">b</option>
+                                </select>
+                                <input type="hidden" name="search" value="${tag}"/>
+                                <input type="hidden" name="id" value="${$(e.currentTarget).attr('id')}"/>
+                            </form>`
+            $(e.currentTarget).html(formd)
+        })
     
 
     $('.clicked').one('click', (e) => {

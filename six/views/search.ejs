@@ -39,7 +39,7 @@
     <div class = "container">
         <div id="searchtrigger" class='<%=tag%>- clicky'></div>
         <% for(let i= complete.length - 1; i >= 0; i--){ %>
-            <div id="<%=complete[i].id%>" class = '<%=tag%>- clicky clicked  <%=complete[i].color%>'>
+            <div id="<%=complete[i].id%>" class = '<%=tag%>- clicky searchclicked  <%=complete[i].color%>'>
             <p id="<%=complete[i].id%>text" class="body-display"><%= complete[i].text %></p>
             <p id="<%=complete[i].id%>tags" class="tags-display"><%for(let j = 0;j < complete[i].tags.length ; j++){%><%if(j < complete[i].tags.length -1){%><%= complete[i].tags[j] + ", " %><%}else{%><%= complete[i].tags[j]%><%}%><%}%></p>
             </div>
