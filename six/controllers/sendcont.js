@@ -13,6 +13,15 @@ send.post('/',(req, res) => {
     })
 })
 
+send.post('/search',(req, res) => {
+    Clicky.find({user: req.session.currentUser, inbox: false, tags: req.body.search}, (error, all) => {
+        res.render('searchsend.ejs' , {
+            content : req.body,
+            complete : all
+        })
+    })
+})
+
 send.post('/upsend/:id',(req, res) => {
     Clicky.find({user: req.session.currentUser, inbox: false}, (error, all) => {
         res.render('upsend.ejs' , {
@@ -29,10 +38,7 @@ send.post('/reply/:id',(req, res) => {
         let from = testArray.splice(testArray.length - 1, 1)
         req.body.tags = "re: " + testArray
         from = from.join().split(":")
-        req.body.to = "to:" + from[from.length - 1]
-       
-        
-         
+        req.body.to = "to:" + from[from.length - 1] 
         res.render('reply.ejs' , {
             content : req.body,
             complete : all,
@@ -162,6 +168,60 @@ send.post('/upcommit/:id',(req, res) => {
                 }
                 Clicky.findByIdAndUpdate(req.params.id, {tags: req.body.tags} , (err, anotherClick) =>{
                     res.redirect('/home')
+                })
+             })  
+            }
+        })
+})
+
+send.post('/searchcommit',(req, res) => {
+    console.log(req.body.tags.length)
+    User.findOne({username: req.body.to}, (error, foundUser)=>{
+        if(foundUser.username === undefined){
+            res.send('no such person')
+        }else if(req.body.to === 'public'){
+            req.body.user = req.body.to
+            req.body.tags = req.body.tags.split(",")
+            req.body.tags = req.body.tags.map(s => s.trim())
+            Clicky.create(req.body, (err, newClick) =>{
+                req.body.user = req.session.currentUser
+                if(req.body.tags.length === 0){
+                    req.body.tags = 'public'
+                }else{
+                    req.body.tags += ',public'
+                    req.body.tags = req.body.tags.split(",")
+                    req.body.tags = req.body.tags.map(s => s.trim())
+                }
+                Clicky.create(req.body, (err, anotherClick)=> {
+                    res.redirect('/home')
+                })
+            })   
+        }else{
+             req.body.user = req.body.to
+             req.body.inbox = true
+             if(req.body.tags.length === 0){
+                 req.body.tags = `from:${req.session.currentUser}`
+             }else{
+                req.body.tags += `,from:${req.session.currentUser}`
+                req.body.tags = req.body.tags.split(",")
+                req.body.tags = req.body.tags.map(s => s.trim())
+             }
+             Clicky.create(req.body, (err, newClick) =>{
+                req.body.user = req.session.currentUser
+                req.body.inbox = false
+                if(req.body.tags === `from:${req.session.currentUser}`){
+                    req.body.tags = `to:${req.body.to}`
+                }else{
+                    req.body.tags.splice(req.body.tags.length - 1, 1 , `to:${req.body.to}`)
+                }
+                Clicky.create(req.body, (err, anotherClick) =>{
+                    Clicky.find({tags: req.body.search, user: req.session.currentUser, inbox: false } ,(err, all) => {
+                        console.log(req.body.search)
+                        res.render('search.ejs' , {
+                            complete : all,
+                            tag: req.body.search
+                        })
+                    })
                 })
              })  
             }

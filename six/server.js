@@ -71,8 +71,9 @@ app.get('/home' , (req, res) => {
 //search
 app.post('/search' , (req, res) => {
     Clicky.find({tags: req.body.search, user: req.session.currentUser, inbox: false } ,(err, all) => {
-        res.render('home.ejs' , {
-            complete : all
+        res.render('search.ejs' , {
+            complete : all,
+            tag: req.body.search
         })
     })
 })
@@ -81,7 +82,7 @@ app.post('/search' , (req, res) => {
 app.post('/inboxsearch' , (req, res) => {
     Clicky.find({tags: req.body.search, user: req.session.currentUser, inbox: true } ,(err, all) => {
         res.render('inbox.ejs' , {
-            complete : all
+            complete : all,
         })
     })
 })
@@ -112,6 +113,21 @@ app.post('/', (req, res) => {
     req.body.tags = req.body.tags.map(s => s.trim())
     Clicky.create(req.body, (err, newClick) =>{
         res.redirect('/home')
+    })   
+})
+
+//create in search screen
+app.post('/searchcreate', (req, res) => {
+    req.body.user = req.session.currentUser
+    req.body.tags = req.body.tags.split(",")
+    req.body.tags = req.body.tags.map(s => s.trim())
+    Clicky.create(req.body, (err, newClick) =>{
+        Clicky.find({tags: req.body.search, user: req.session.currentUser, inbox: false } ,(err, all) => {
+            res.render('search.ejs' , {
+                complete : all,
+                tag: req.body.search
+            })
+        })
     })   
 })
 

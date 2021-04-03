@@ -14,13 +14,14 @@
     <div class="modal">
        
         <div class="box <%=content.color%>">
-            <form action="/send/commit" method="POST">
+            <form action="/send/searchcommit" method="POST">
                 <textarea id="send-body" class="body" name="text"><%=content.text%></textarea>
                 <textarea name="tags" style="width:210px;height:15px"><%=content.tags%></textarea>
                 <input type="text" id="send-to" name="to" placeholder="to" style="width:210px;height:15px"><br>
                 <input type="submit" value="send">
-                <input type="submit" value="cancel" formaction="/cancel">
+                <input type="submit" value="cancel" formaction="/search">
                 <input type="hidden" name="color" value="<%=content.color%>"/>
+                <input type="hidden" name="search" value="<%=content.search%>"/>
                 </form>
         </div>
     </div>

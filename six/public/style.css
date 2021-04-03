@@ -100,7 +100,7 @@ form {
 }
 
 .r {
-    background-color: #fcc5c0;
+    background-color: #ffe3de;
 }
 
 .y {
@@ -168,6 +168,10 @@ a, a:visited {
     font-size: 1.2em
 }
 
+a:hover {
+    text-decoration: underline;
+}
+
 span {
     color: grey;
 }
@@ -176,3 +180,10 @@ span {
     font-size: .2em
 }
 
+#not-a-member {
+    font-size: .8em;
+}
+
+.sign-in-div {
+    font-family: "Quicksand";
+}

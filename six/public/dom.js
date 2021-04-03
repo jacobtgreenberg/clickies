@@ -10,13 +10,13 @@ $(()=>{
                     <input type="submit" value="send" formaction="/send">
                     <input type="submit" value="cancel" formaction="/cancel">
                     <select name="color">
-                    <option value=""></option>
-                    <option value="r">r</option>
-                    <option value="y">y</option>
-                    <option value="g">g</option>
-                    <option value="p">p</option>
-                    <option value="b">b</option>
-                </select>
+                        <option value=""></option>
+                        <option value="r">r</option>
+                        <option value="y">y</option>
+                        <option value="g">g</option>
+                        <option value="p">p</option>
+                        <option value="b">b</option>
+                    </select>
                 </form>
                 `
     
@@ -25,6 +25,35 @@ $(()=>{
     $(e.target).addClass('form-format')
     $(e.target).html(form)
     })
+
+
+
+    $('#searchtrigger').one('click',(e)=> {
+        console.log($(e.target).attr('class'))
+        let split = $(e.target).attr('class').split('-')
+        console.log(split)
+        let tag = split[0]
+        console.log(tag)
+        $(e.target).addClass('form-format')
+        const searchForm= `<form action="/searchcreate" method="POST">   
+                <textarea class="body"  name="text"></textarea><br>
+                <textarea class="textarea-tags" name="tags" placeholder="tags"></textarea><br>
+                <input type="submit" value="  click  ">
+                <input type="submit" value="send" formaction="/send/search">
+                <input type="submit" value="cancel" formaction="/search">
+                <select name="color">
+                    <option value=""></option>
+                    <option value="r">r</option>
+                    <option value="y">y</option>
+                    <option value="g">g</option>
+                    <option value="p">p</option>
+                    <option value="b">b</option>
+                </select>
+                <input type="hidden" name="search" value="${tag}"/>
+            </form>
+            `
+        $(e.target).html(searchForm)
+        })
     
 
     
@@ -51,7 +80,6 @@ $(()=>{
     })
 
     $('.inboxclick').one('click', (e) => {
-        console.log($(e.target).attr('class').length)
         let letter = $(e.target).attr('class')[$(e.target).attr('class').length - 1]
         $(e.target).addClass('form-format')
         const formd = `<form action="/upload/${$(e.currentTarget).attr('id')}?_method=PUT" method="POST">
