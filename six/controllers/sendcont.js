@@ -163,7 +163,7 @@ send.post('/upcommit/:id',(req, res) => {
                     console.log(req.body.tags)
                     req.body.tags.splice(req.body.tags.length - 1, 1 , `to:${req.body.to}`)
                 }
-                Clicky.findByIdAndUpdate(req.params.id, {tags: req.body.tags} , (err, anotherClick) =>{
+                Clicky.findByIdAndUpdate(req.params.id, {tags: req.body.tags, text: req.body.text} , (err, anotherClick) =>{
                     res.redirect('/home')
                 })
              })  
