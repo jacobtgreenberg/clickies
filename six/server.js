@@ -184,6 +184,18 @@ app.delete('/deleteallinbox', (req, res) => {
     } )
 })
 
+//search delete
+app.delete('/searchdelete', (req, res) => {
+    Clicky.findByIdAndRemove(req.body.id, { useFindAndModify: false}, (err ,data) => {
+      Clicky.find({user: req.session.currentUser, inbox: false, tags: req.body.search}, (error, all)=> {
+          res.render('search.ejs', {
+            complete : all,
+            tag: req.body.search
+          })
+      })
+    })
+})
+
 //delete
 app.delete('/:id' , (req, res) => {
     Clicky.findByIdAndRemove(req.params.id, { useFindAndModify: false}, (err ,data) => {
@@ -195,6 +207,9 @@ app.delete('/:id' , (req, res) => {
     })
 })
 
+
+
+//loads send interface for search trigger
 app.post('/searchysend',(req, res) => {
     Clicky.find({user: req.session.currentUser, inbox: false, tags: req.body.search}, (error, all) => {
         res.render('searchsend.ejs' , {
@@ -204,6 +219,72 @@ app.post('/searchysend',(req, res) => {
     })
 })
 
+//loads send interface for search clicky
+app.post('/searchupsend',(req, res) => {
+    Clicky.find({user: req.session.currentUser, tags: req.body.search, inbox: false}, (error, all) => {
+        res.render('searchupsend.ejs' , {
+            content : req.body,
+            complete : all,
+            id : req.body.id
+        })
+    })
+})
+
+//commits send for clicky in search
+app.post('/searchupcommit',(req, res) => {
+    User.findOne({username: req.body.to}, (error, foundUser)=>{
+        console.log(req.body)
+        if(foundUser.username === undefined){
+            res.send('no such person')
+        }else if(req.body.to === 'public'){
+            req.body.user = req.body.to
+            req.body.tags = req.body.tags.split(",")
+            req.body.tags = req.body.tags.map(s => s.trim())
+            Clicky.create(req.body, (err, newClick) =>{
+                req.body.user = req.session.currentUser
+                if(req.body.tags.length === 0){
+                    req.body.tags = 'public'
+                }else{
+                req.body.tags += ',public'
+                req.body.tags = req.body.tags.split(",")
+                req.body.tags = req.body.tags.map(s => s.trim())
+                }
+                Clicky.findByIdAndUpdate(req.params.id, {tags: req.body.tags} , (err, anotherClick)=> {
+                    res.redirect('/home')
+                })
+            })   
+        }else{
+             req.body.user = req.body.to
+             req.body.inbox = true
+             if(req.body.tags.length === 0){
+                 req.body.tags =`from:${req.session.currentUser}`
+             }else{
+                req.body.tags += `,from:${req.session.currentUser}`
+                req.body.tags = req.body.tags.split(",")
+                req.body.tags = req.body.tags.map(s => s.trim())
+             }
+             Clicky.create(req.body, (err, newClick) =>{
+                if(req.body.tags === `from:${req.session.currentUser}`){
+                    req.body.tags = `to:${req.body.to}`
+                }else{
+                    console.log(req.body.tags.length)
+                    console.log(req.body.tags)
+                    req.body.tags.splice(req.body.tags.length - 1, 1 , `to:${req.body.to}`)
+                }
+                Clicky.findByIdAndUpdate(req.body.id, {tags: req.body.tags} , (err, anotherClick) =>{
+                    Clicky.find({tags: req.body.search, user: req.session.currentUser, inbox: false } ,(err, all) => {
+                        res.render('search.ejs' , {
+                            complete : all,
+                            tag: req.body.search
+                        })
+                    })
+                })
+             })  
+            }
+        })
+})
+
+//commits send for trigger in search
 app.post('/searchcommity',(req, res) => {
     console.log(req.body.tags.length)
     User.findOne({username: req.body.to}, (error, foundUser)=>{

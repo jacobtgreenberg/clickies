@@ -58,15 +58,14 @@ $(()=>{
         $('.searchclicked').one('click', (e) => {
             let split = $(e.target).attr('class').split('-')
             let tag = split[0]
-            console.log($(e.currentTarget).attr('id'))
             $(e.target).addClass('form-format')
             const formd = `<form action="searchupdate?_method=PUT" method="POST">
                                 <textarea class="body" name="text">${$(`#${$(e.currentTarget).attr('id')}text`).text().trim()}</textarea>
                                 <br>
                                 <textarea class="textarea-tags" name="tags" placeholder="tags">${$(`#${$(e.currentTarget).attr('id')}tags`).text().trim()}</textarea><br>
                                 <input type="submit" value="  click  ">
-                                <input type="submit" value="send" formaction="/send/upsend/${$(e.currentTarget).attr('id')}">
-                                <input type="submit" value="delete" formaction="/${$(e.currentTarget).attr('id')}?_method=DELETE">
+                                <input type="submit" value="send" formaction="/searchupsend">
+                                <input type="submit" value="delete" formaction="/searchdelete?_method=DELETE">
                                 <select name="color">
                                     <option value=""></option>
                                     <option value="r">r</option>
