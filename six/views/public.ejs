@@ -33,7 +33,7 @@
     </div>
     <div class = "container">
     <% for(let i= complete.length - 1; i >= 0; i--){ %>
-        <div id="<%=complete[i].id%>" class = 'clicky <%=complete[i].color%>'>
+        <div id="<%=complete[i].id%>" class = 'clicky public-click <%=complete[i].color%>'>
            <p id="<%=complete[i].id%>text" class="body-display"><%= complete[i].text %></p>
            <p id="<%=complete[i].id%>tags" class="tags-display"><%for(let j = 0;j < complete[i].tags.length ; j++){%><%if(j < complete[i].tags.length -1){%><%= complete[i].tags[j] + ", " %><%}else{%><%= complete[i].tags[j]%><%}%><%}%></p>
         </div>

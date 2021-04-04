@@ -108,11 +108,11 @@ form {
 }
 
 .g {
-    background-color: #abffe0;
+    background-color: #defaea;
 }
 
 .p {
-    background-color: #eec4ff;
+    background-color: #f9e6fa;
 }
 
 .b {
@@ -124,6 +124,10 @@ input[type="submit"] {
     border: 1px solid grey;
     font-family: "Quicksand";
     font-size: 1em;
+}
+
+li input[type="submit"] {
+    background-color: #ebebeb;
 }
 
 
@@ -152,6 +156,7 @@ ul {
 h1 {
     display: inline-block;
     font-family: "Quicksand";
+    color: black;
 }
 
 .nav {
@@ -172,8 +177,8 @@ a:hover {
     text-decoration: underline;
 }
 
-span {
-    color: grey;
+.eez {
+    color: #bcc7f7;
 }
 
 .nav-submit {
@@ -186,4 +191,12 @@ span {
 
 .sign-in-div {
     font-family: "Quicksand";
+}
+
+#search-button {
+    background-color:  #abffe0;
+}
+
+#clear-all-button {
+    background-color: #ebebeb;    
 }

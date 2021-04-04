@@ -117,6 +117,16 @@ app.post('/', (req, res) => {
     })   
 })
 
+//public upload
+app.post('/publicupload', (req, res) => {
+    req.body.user = req.session.currentUser
+    req.body.tags = req.body.tags.split(",")
+    req.body.tags = req.body.tags.map(s => s.trim())
+    Clicky.create(req.body, (err, newClick) =>{
+        res.redirect('/public')
+    }) 
+})
+
 //create in search screen
 app.post('/searchcreate', (req, res) => {
     req.body.user = req.session.currentUser
@@ -164,15 +174,19 @@ app.post('/cancel', (req, res) => {
     res.redirect('/home')
 })
 
-//inboxcancel
+//inbox cancel
 app.post('/cancelinbox', (req, res) => {
     res.redirect('/inbox')
 })
 
+//public cancel
+app.post('/publiccancel', (req, res) => {
+    res.redirect('/public')
+})
 
 //deleteAllHome
 app.delete('/delete', (req, res) => {
-    Clicky.deleteMany({inbox : false },(err, data) => {
+    Clicky.deleteMany({inbox : false, user: req.session.currentUser },(err, data) => {
         res.redirect('/home')
     } )
 })
@@ -249,7 +263,8 @@ app.post('/searchupcommit',(req, res) => {
                 req.body.tags = req.body.tags.split(",")
                 req.body.tags = req.body.tags.map(s => s.trim())
                 }
-                Clicky.findByIdAndUpdate(req.params.id, {tags: req.body.tags} , (err, anotherClick)=> {
+                console.log(req.body)
+                Clicky.findByIdAndUpdate(req.body.id, {tags: req.body.tags} , (err, anotherClick)=> {
                     res.redirect('/home')
                 })
             })   
@@ -271,7 +286,7 @@ app.post('/searchupcommit',(req, res) => {
                     console.log(req.body.tags)
                     req.body.tags.splice(req.body.tags.length - 1, 1 , `to:${req.body.to}`)
                 }
-                Clicky.findByIdAndUpdate(req.body.id, {tags: req.body.tags} , (err, anotherClick) =>{
+                Clicky.findByIdAndUpdate(req.body.id, {tags: req.body.tags, text: req.body.text, color: req.body.color} , (err, anotherClick) =>{
                     Clicky.find({tags: req.body.search, user: req.session.currentUser, inbox: false } ,(err, all) => {
                         res.render('search.ejs' , {
                             complete : all,

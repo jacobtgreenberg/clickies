@@ -76,14 +76,16 @@ send.post('/upreply/:id',(req, res) => {
 })
 
 send.post('/commit',(req, res) => {
-    console.log(req.body.tags.length)
+    console.log(req.body.tags)
     User.findOne({username: req.body.to}, (error, foundUser)=>{
         if(foundUser.username === undefined){
             res.send('no such person')
         }else if(req.body.to === 'public'){
             req.body.user = req.body.to
-            req.body.tags = req.body.tags.split(",")
-            req.body.tags = req.body.tags.map(s => s.trim())
+            if(req.body.tags){
+                req.body.tags = req.body.tags.split(",")
+                req.body.tags = req.body.tags.map(s => s.trim())
+            }
             Clicky.create(req.body, (err, newClick) =>{
                 req.body.user = req.session.currentUser
                 if(req.body.tags.length === 0){
@@ -93,6 +95,7 @@ send.post('/commit',(req, res) => {
                     req.body.tags = req.body.tags.split(",")
                     req.body.tags = req.body.tags.map(s => s.trim())
                 }
+                
                 Clicky.create(req.body, (err, anotherClick)=> {
                     res.redirect('/home')
                 })
@@ -130,8 +133,10 @@ send.post('/upcommit/:id',(req, res) => {
             res.send('no such person')
         }else if(req.body.to === 'public'){
             req.body.user = req.body.to
-            req.body.tags = req.body.tags.split(",")
-            req.body.tags = req.body.tags.map(s => s.trim())
+            if(req.body.tags){
+                req.body.tags = req.body.tags.split(",")
+                req.body.tags = req.body.tags.map(s => s.trim())
+            }
             Clicky.create(req.body, (err, newClick) =>{
                 req.body.user = req.session.currentUser
                 if(req.body.tags.length === 0){
@@ -163,7 +168,7 @@ send.post('/upcommit/:id',(req, res) => {
                     console.log(req.body.tags)
                     req.body.tags.splice(req.body.tags.length - 1, 1 , `to:${req.body.to}`)
                 }
-                Clicky.findByIdAndUpdate(req.params.id, {tags: req.body.tags, text: req.body.text} , (err, anotherClick) =>{
+                Clicky.findByIdAndUpdate(req.params.id, {tags: req.body.tags, text: req.body.text, color: req.body.color} , (err, anotherClick) =>{
                     res.redirect('/home')
                 })
              })  

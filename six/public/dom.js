@@ -102,6 +102,20 @@ $(()=>{
         $(e.currentTarget).html(formd)
     })
 
+    $('.public-click').one('click',(e)=> {
+        let letter = $(e.target).attr('class')[$(e.target).attr('class').length - 1]
+        $(e.target).addClass('form-format')
+        const formd = `<form action="/publicupload" method="POST">
+                        <textarea class="body" name="text" readonly>${$(`#${$(e.currentTarget).attr('id')}text`).text().trim()}</textarea>
+                        <br>
+                        <textarea class="textarea-tags" name="tags" placeholder="tags" readonly>${$(`#${$(e.currentTarget).attr('id')}tags`).text().trim()}</textarea><br>
+                        <input type="submit" value="upload">
+                        <input type="submit" value="cancel" formaction="/publiccancel">
+                        <input type="hidden" name="color" value="${letter}"/>
+                        </form>`
+        $(e.currentTarget).html(formd)
+    })
+
     $('.inboxclick').one('click', (e) => {
         let letter = $(e.target).attr('class')[$(e.target).attr('class').length - 1]
         $(e.target).addClass('form-format')
