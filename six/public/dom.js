@@ -116,6 +116,23 @@ $(()=>{
         $(e.currentTarget).html(formd)
     })
 
+    $('.publicsearch-click').one('click',(e)=> {
+        let letter = $(e.target).attr('class')[$(e.target).attr('class').length - 1]
+        let split = $(e.target).attr('class').split('-')
+        let tag = split[0]
+        $(e.target).addClass('form-format')
+        const formd = `<form action="/publicsearchupload" method="POST">
+                        <textarea class="body" name="text" readonly>${$(`#${$(e.currentTarget).attr('id')}text`).text().trim()}</textarea>
+                        <br>
+                        <textarea class="textarea-tags" name="tags" placeholder="tags" readonly>${$(`#${$(e.currentTarget).attr('id')}tags`).text().trim()}</textarea><br>
+                        <input type="submit" value="upload">
+                        <input type="submit" value="cancel" formaction="/publicsearchcancel">
+                        <input type="hidden" name="color" value="${letter}"/>
+                        <input type="hidden" name="search" value="${tag}"/>
+                        </form>`
+        $(e.currentTarget).html(formd)
+    })
+
     $('.inboxclick').one('click', (e) => {
         let letter = $(e.target).attr('class')[$(e.target).attr('class').length - 1]
         $(e.target).addClass('form-format')

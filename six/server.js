@@ -91,8 +91,9 @@ app.post('/inboxsearch' , (req, res) => {
 //public search
 app.post('/publicsearch' , (req, res) => {
     Clicky.find({tags: req.body.search, user: "public"} ,(err, all) => {
-        res.render('public.ejs' , {
-            complete : all
+        res.render('publicsearch.ejs' , {
+            complete : all,
+            tag : req.body.search
         })
     })
 })
@@ -124,6 +125,21 @@ app.post('/publicupload', (req, res) => {
     req.body.tags = req.body.tags.map(s => s.trim())
     Clicky.create(req.body, (err, newClick) =>{
         res.redirect('/public')
+    }) 
+})
+
+//public search upload
+app.post('/publicsearchupload', (req, res) => {
+    req.body.user = req.session.currentUser
+    req.body.tags = req.body.tags.split(",")
+    req.body.tags = req.body.tags.map(s => s.trim())
+    Clicky.create(req.body, (err, newClick) =>{
+        Clicky.find({tags : req.body.search, user : "public"}, (err, found) => {
+            res.render('publicsearch.ejs' , {
+                complete : found,
+                tag : req.body.search
+            })
+        })
     }) 
 })
 
@@ -182,6 +198,17 @@ app.post('/cancelinbox', (req, res) => {
 //public cancel
 app.post('/publiccancel', (req, res) => {
     res.redirect('/public')
+})
+
+//public search cancel
+app.post('/publicsearchcancel', (req, res) => {
+    Clicky.find({tags : req.body.search, user: "public"}, (err, found) => {
+        console.log(req.body)
+        res.render('publicsearch.ejs', {
+            complete : found,
+            tag : req.body.search
+        })
+    })
 })
 
 //deleteAllHome
