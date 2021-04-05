@@ -28,7 +28,7 @@
     </div>
 
     <div class="nav">
-        <a href="/home"><h1>click<span>eez</span></h1></a>
+        <a href="/home"><h1>click<span class="eez">eez</span></h1></a>
         <ul>
             <li><a href="/inbox">inbox</a></li>
             <li>|</li>
@@ -56,9 +56,9 @@
     <div class = "container">
         <div id="trigger" class='clicky'></div>
         <% for(let i= complete.length - 1; i >= 0; i--){ %>
-            <div id="<%=complete[i].id%>" class = 'clicky clicked'>
-            <p id="<%=complete[i].id%>text"><%= complete[i].text %></p>
-            <p id="<%=complete[i].id%>tags"><%for(let j = 0;j < complete[i].tags.length ; j++){%><%if(j < complete[i].tags.length -1){%><%= complete[i].tags[j] + ", " %><%}else{%><%= complete[i].tags[j]%><%}%><%}%></p>
+            <div id="<%=complete[i].id%>" class = 'clicky clicked <%=complete[i].color%>'>
+            <p id="<%=complete[i].id%>text" class="body-display"><%= complete[i].text %></p>
+            <p id="<%=complete[i].id%>tags" class="tags-display"><%for(let j = 0;j < complete[i].tags.length ; j++){%><%if(j < complete[i].tags.length -1){%><%= complete[i].tags[j] + ", " %><%}else{%><%= complete[i].tags[j]%><%}%><%}%></p>
             </div>
             <% } %>
     </div>

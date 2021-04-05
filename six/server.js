@@ -292,7 +292,12 @@ app.post('/searchupcommit',(req, res) => {
                 }
                 console.log(req.body)
                 Clicky.findByIdAndUpdate(req.body.id, {tags: req.body.tags} , (err, anotherClick)=> {
-                    res.redirect('/home')
+                    Clicky.find({tags: req.body.search, user: req.session.currentUser, inbox: false } ,(err, all) => {
+                        res.render('search.ejs' , {
+                            complete : all,
+                            tag: req.body.search
+                        })
+                    })
                 })
             })   
         }else{
@@ -346,7 +351,13 @@ app.post('/searchcommity',(req, res) => {
                     req.body.tags = req.body.tags.map(s => s.trim())
                 }
                 Clicky.create(req.body, (err, anotherClick)=> {
-                    res.redirect('/home')
+                    Clicky.find({tags: req.body.search, user: req.session.currentUser, inbox: false } ,(err, all) => {
+                        console.log(req.body.search)
+                        res.render('search.ejs' , {
+                            complete : all,
+                            tag: req.body.search
+                        })
+                    })
                 })
             })   
         }else{

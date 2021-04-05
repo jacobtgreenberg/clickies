@@ -58,6 +58,7 @@ $(()=>{
         $('.searchclicked').one('click', (e) => {
             let split = $(e.target).attr('class').split('-')
             let tag = split[0]
+            let letter = $(e.target).attr('class')[$(e.target).attr('class').length - 1]
             $(e.target).addClass('form-format')
             const formd = `<form action="searchupdate?_method=PUT" method="POST">
                                 <textarea class="body" name="text">${$(`#${$(e.currentTarget).attr('id')}text`).text().trim()}</textarea>
@@ -73,6 +74,7 @@ $(()=>{
                                     <option value="g">g</option>
                                     <option value="p">p</option>
                                     <option value="b">b</option>
+                                    <option value=${letter} selected>${letter}</option>
                                 </select>
                                 <input type="hidden" name="search" value="${tag}"/>
                                 <input type="hidden" name="id" value="${$(e.currentTarget).attr('id')}"/>
@@ -82,6 +84,7 @@ $(()=>{
     
 
     $('.clicked').one('click', (e) => {
+        let letter = $(e.target).attr('class')[$(e.target).attr('class').length - 1]
         $(e.target).addClass('form-format')
         const formd = `<form action="/${$(e.currentTarget).attr('id')}?_method=PUT" method="POST">
                             <textarea class="body" name="text">${$(`#${$(e.currentTarget).attr('id')}text`).text().trim()}</textarea>
@@ -97,6 +100,7 @@ $(()=>{
                                 <option value="g">g</option>
                                 <option value="p">p</option>
                                 <option value="b">b</option>
+                                <option value=${letter} selected>${letter}</option>
                             </select>
                         </form>`
         $(e.currentTarget).html(formd)

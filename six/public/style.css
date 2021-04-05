@@ -130,6 +130,11 @@ li input[type="submit"] {
     background-color: #ebebeb;
 }
 
+#sign-in {
+    background-color: #ebebeb;
+    margin-top: 1em;
+    margin-bottom: .5em;
+}
 
  a, a:visited {
      color: black;
@@ -181,6 +186,10 @@ a:hover {
     color: #bcc7f7;
 }
 
+.eez:visited {
+    color: #bcc7f7;
+}
+
 .nav-submit {
     font-size: .2em
 }
@@ -193,10 +202,3 @@ a:hover {
     font-family: "Quicksand";
 }
 
-#search-button {
-    background-color:  #abffe0;
-}
-
-#clear-all-button {
-    background-color: #ebebeb;    
-}
